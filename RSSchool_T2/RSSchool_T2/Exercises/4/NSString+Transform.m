@@ -2,50 +2,48 @@
 
 @implementation NSString (Transform)
 
-- (NSString *)transform {
 
+- (NSString *)transform {
+    
     NSCharacterSet *setOfAlphabet = [NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyz"];
     NSCharacterSet *setOfVowels = [NSCharacterSet characterSetWithCharactersInString:@"aeiouyAEIOUY"];
+    NSCharacterSet *setOfСonsonants = [NSCharacterSet characterSetWithCharactersInString:@"bcdfghjklmnpqrstvwxzBCDFGHJKLMNPQRSTVWXZ"];
     
     NSMutableArray *arr = [NSMutableArray arrayWithArray: [self componentsSeparatedByString:@" "]];
-    NSMutableArray *arrRes = [[NSMutableArray alloc] init];
+    
+    [arr removeObject:@""];
     
     if ([[NSCharacterSet characterSetWithCharactersInString:[self lowercaseString]] isSupersetOfSet:setOfAlphabet]) {
-        
-        for (NSString *one in arr) {
-            NSMutableString *oneReady;
-            oneReady = [NSMutableString stringWithString:one];
-            long accum = 0;
-            for (long i = 0; i < one.length; i++) {
-                
-                if ([setOfVowels isSupersetOfSet:[NSCharacterSet characterSetWithCharactersInString: [one substringWithRange:NSMakeRange(i, 1)]]]) {
-                    accum++;
-                    [oneReady replaceCharactersInRange:NSMakeRange(i, 1) withString:[[one substringWithRange:NSMakeRange(i, 1)] uppercaseString]];
-                    NSLog(@"");
-                }
-            }
-            [oneReady insertString:[NSString stringWithFormat:@"%li",accum] atIndex:0];
-            [arrRes addObject:oneReady];
-            
-            NSLog(@"");
-        }
-        
-        [arrRes sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
-            
-            NSString *first = (NSString *)obj1;
-            NSString *second = (NSString *)obj2;
-            
-            return [[first substringWithRange:NSMakeRange(0, 1)] compare:[second substringWithRange:NSMakeRange(0, 1)] options:NSCaseInsensitiveSearch];
-        }];
-        return [arrRes componentsJoinedByString:@" "];
-        
-        NSLog(@"");
-        
+        return [self editString:arr setOfSomething:setOfVowels];
     } else {
-        
+        return [self editString:arr setOfSomething:setOfСonsonants];
+    }
+}
+
+- (NSString *) editString:(NSArray *)arr setOfSomething:(NSCharacterSet *)set {
+    NSMutableArray *arrRes = [[NSMutableArray alloc] init];
+    
+    for (NSString *one in arr) {
+        NSMutableString *oneReady;
+        oneReady = [NSMutableString stringWithString:one];
+        long accum = 0;
+        for (long i = 0; i < one.length; i++) {
+            
+            if ([set isSupersetOfSet:[NSCharacterSet characterSetWithCharactersInString: [one substringWithRange:NSMakeRange(i, 1)]]]) {
+                accum++;
+                [oneReady replaceCharactersInRange:NSMakeRange(i, 1) withString:[[one substringWithRange:NSMakeRange(i, 1)] uppercaseString]];
+            }
+        }
+        [oneReady insertString:[NSString stringWithFormat:@"%li", accum] atIndex:0];
+        [arrRes addObject:oneReady];
     }
     
-    return self;
+    [arrRes sortUsingComparator:^NSComparisonResult(id  _Nonnull first, id  _Nonnull second) {
+        return [[(NSString *)first substringWithRange:NSMakeRange(0, 1)] compare:[(NSString *)second substringWithRange:NSMakeRange(0, 1)] options:NSCaseInsensitiveSearch];
+    }];
+    
+    return [arrRes componentsJoinedByString:@" "];
 }
+
 
 @end

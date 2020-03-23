@@ -23,11 +23,8 @@
     NSString *past = @"past";
     NSString *quarter = @"quarter";
     NSString *myMinutes = @"minutes";
-    NSString *myMinute = @"minute";
     NSString *oclock = @"o'clock";
     NSString *to = @"to";
-    
-    NSString *current = @"";
     
     NSString *wordHour = [arrOfNumber objectForKey:hours];
     NSString *increaseHour = [arrOfNumber objectForKey:[NSString stringWithFormat:@"%li", [hours integerValue] + 1]];
@@ -39,12 +36,6 @@
     NSString *wordMinutes = [arrOfNumber objectForKey:minutes];
     NSString *minMinutes = [arrOfNumber objectForKey:[NSString stringWithFormat:@"%li", 60 - [minutes integerValue]]];
     NSInteger minmin = 60 - [minutes integerValue];
-    
-    NSInteger index = [minutes integerValue] % 10;
-    NSString *dop = [arrOfNumber objectForKey:[NSString stringWithFormat:@"%li", index]];
-    
-    
-    
     
     if ([minutes integerValue] == 0) {
         return [NSString stringWithFormat:@"%@ %@", wordHour, oclock];
