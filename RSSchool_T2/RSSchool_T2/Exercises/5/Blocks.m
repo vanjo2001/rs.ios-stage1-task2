@@ -20,7 +20,6 @@
         
         self.blockA = ^(NSArray *arr) {
             self.arr = arr;
-            NSLog(@"");
         };
         
         self.blockB = ^(Class class) {

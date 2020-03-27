@@ -16,7 +16,7 @@
 }
 
 - (void)testTimeConvertation_With0Minutes {
-    XCTAssertEqualObjects([self.converter convertFromHours:@"11" minutes:@"00"], @"eleven o'clock");
+    XCTAssertEqualObjects([self.converter convertFromHours:@"11" minutes:@"00"], @"eleven o' clock");
 }
 
 - (void)testTimeConvertation_With5Minutes {

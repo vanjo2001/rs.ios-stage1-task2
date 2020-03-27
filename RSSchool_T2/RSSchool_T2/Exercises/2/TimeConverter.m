@@ -23,7 +23,7 @@
     NSString *past = @"past";
     NSString *quarter = @"quarter";
     NSString *myMinutes = @"minutes";
-    NSString *oclock = @"o'clock";
+    NSString *oclock = @"o' clock";
     NSString *to = @"to";
     
     NSString *wordHour = [arrOfNumber objectForKey:hours];
